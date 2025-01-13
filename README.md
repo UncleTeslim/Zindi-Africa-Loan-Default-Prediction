@@ -39,7 +39,7 @@ The dataset for this project contains the following:
 - **Features:** Loan amount, disbursement date, amoount repaid, New or returning borrower, duration etc.
 - **Target Variable:** Binary (1 = Default, 0 = No Default).
 
-> **Note:** The dataset was provided by [Zindi Africa](https://zindi.africa/) as part of the Loan Default Prediction Challenge. Access the dataset directly from the Zindi platform.
+> **Note:** The dataset was provided by [Zindi Africa](https://zindi.africa/](https://zindi.africa/competitions/african-credit-scoring-challenge) as part of the Loan Default Prediction Challenge. Access the dataset directly from the Zindi platform.
 
 ---
 
