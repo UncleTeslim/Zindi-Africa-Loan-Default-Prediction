@@ -27,7 +27,6 @@ X_resampled, y_resampled = smote.fit_resample(X, y)
 X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.3, random_state=42, stratify=y_resampled)
 
 
-# Instantiating the model
 log_reg = LogisticRegression(max_iter=1000, random_state=42 )
 
 # Train the model
@@ -52,7 +51,7 @@ print(confusion_matrix(y_test, y_pred))
 # ROC AUC Score
 roc_auc = roc_auc_score(y_test, y_probs)
 print(f"\nROC AUC Score: {roc_auc:.4f}")
-
+#print(test_predictions_proba[:10]) 
 
 
 #Make predictiosns based on test dataset using my model
