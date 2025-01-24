@@ -62,6 +62,7 @@ test_features = test[X_train.columns]
 test_predictions = log_reg.predict(test_features)
 test_predictions_proba = log_reg.predict_proba(test_features)[:, 1]
 
+print(test_predictions_proba[:10])  # Show confidence scores for the first 10 samples
 
 
 # #saving prediction to test dataset and extracting just ID and target
