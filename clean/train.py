@@ -7,68 +7,68 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 from imblearn.over_sampling import SMOTE
 
 
-#Reading train and test dataset which i cleaned ,analysed 
-# and encoded in jupyter notebook
+#OOP
 
-train = pd.read_csv('clean_train.csv')
-
-test = pd.read_csv('clean_test.csv')
-
-#I declared the training features and targets. 
-# I then applied SMOTE to balance the dataset.
-
-X = train.drop('target', axis=1)
-y = train['target']
-smote = SMOTE(random_state=42)
-X_resampled, y_resampled = smote.fit_resample(X, y)
-
-
-# Splitting the training data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.3, random_state=42, stratify=y_resampled)
-
-
-log_reg = LogisticRegression(max_iter=1000, random_state=42 )
-
-# Train the model
-log_reg.fit(X_train, y_train)
-
-# Make predictions
-y_pred = log_reg.predict(X_test)
-y_probs = log_reg.predict_proba(X_test)[:, 1] 
-
-# Accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy:", accuracy)
-
-# Classification report
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
-
-# Confusion matrix
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
-
-# ROC AUC Score
-roc_auc = roc_auc_score(y_test, y_probs)
-print(f"\nROC AUC Score: {roc_auc:.4f}")
-#print(test_predictions_proba[:10]) 
-
-
-#Make predictiosns based on test dataset using my model
-
-test_features = test[X_train.columns]
-
-test_predictions = log_reg.predict(test_features)
-test_predictions_proba = log_reg.predict_proba(test_features)[:, 1]
-
-print(test_predictions_proba[:10])  # Show confidence scores for the first 10 samples
-
-
-# #saving prediction to test dataset and extracting just ID and target
-
-# test['target'] = test_predictions
-# my_result =  test[['ID', 'target']]
-# my_result.head(10)
+class LogisticRegressionModel:
+    def __init__(self, train_csv, test_csv, max_iter=1000, random_state=42, test_size=0.3, target='target'):
+        self.max_iter = max_iter
+        self.random_state = random_state
+        self.test_size = test_size
+        self.train_csv = train_csv
+        self.test_csv = test_csv
+        self.target = target
+        self.log_reg = LogisticRegression(max_iter=self.max_iter, random_state=self.random_state)
+        
+        
+    
+    
+    def read_csv(self):
+        self.train = pd.read_csv(self.train_csv)
+        self.test = pd.read_csv(self.test_csv)
+        
+        
+    def preprocess_data(self):
+        X = self.train.drop(self.target, axis=1)
+        y = self.train[self.target]
+        smote = SMOTE(random_state=42)
+        X_resampled, y_resampled = smote.fit_resample(X, y)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
+            X_resampled, y_resampled, test_size=self.test_size, 
+         random_state=self.random_state, stratify=y_resampled)
+        
+    def train_model(self):
+        self.log_reg.fit(self.X_train, self.y_train)
+        
+    def evaluate_model(self):
+        y_pred = self.log_reg.predict(self.X_test)
+        y_probs = self.log_reg.predict_proba(self.X_test)[:, 1] 
+        accuracy = accuracy_score(self.y_test, y_pred)
+        print("Accuracy:", accuracy)
+        print("\nClassification Report:")
+        print(classification_report(self.y_test, y_pred))
+        print("\nConfusion Matrix:")
+        print(confusion_matrix(self.y_test, y_pred))
+        roc_auc = roc_auc_score(self.y_test, y_probs)
+        print(f"\nROC AUC Score: {roc_auc:.4f}")
+        
+    def make_predictions(self):
+        test_features = self.test[self.X_train.columns]
+        test_predictions = self.log_reg.predict(test_features)
+        test_predictions_proba = self.log_reg.predict_proba(test_features)[:, 1]
+        return test_predictions, test_predictions_proba
+    
+    def save_predictions(self):
+        test_predictions, test_predictions_proba = self.make_predictions()
+        self.test['target'] = test_predictions
+        my_result =  self.test[['ID', 'target']]
+        my_result.to_csv('baseline_submission.csv', index=False)
 
 
-# my_result.to_csv('baseline_submission.csv', index=False)
+if __name__ == "__main__":
+    model = LogisticRegressionModel('clean_train.csv', 'clean_test.csv')
+    model.read_csv()
+    model.preprocess_data()
+    model.train_model()
+    model.evaluate_model()
+    model.make_predictions()
+    model.save_predictions()
