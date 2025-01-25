@@ -2,5 +2,5 @@ no_oop.py
 /jupyter_files/baseline_submission.csv
 baseline_submission.csv
 columns.pkl
-logistic_regresion_model.pkl
+logistic_regression_model.pkl
 
