@@ -2,6 +2,7 @@
 __pycache__/
 /jupyter_files/baseline_submission.csv
 baseline_submission.csv
+baseline_submission_copy.csv
 columns.pkl
 logistic_regression_model.pkl
 
