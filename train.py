@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,  roc_auc_score
@@ -8,7 +9,49 @@ from imblearn.over_sampling import SMOTE
 import joblib 
 
 
+
 #OOP
+
+
+class FeatureEngineering:
+    def __init__(self, df):
+        self.df = df
+        
+        
+    def clean_data(self):
+        self.df.drop(['ID'], axis=1, inplace=True)
+        
+        self.df['repayment_ratio'] = self.df['Total_Amount_to_Repay'] / self.df['Total_Amount']
+        self.df['lender_funded_ratio'] = self.df['Amount_Funded_By_Lender'] / self.df['Total_Amount']
+        self.df['lender_repaid_ratio'] = self.df['Lender_portion_to_be_repaid'] / self.df['Lender_portion_Funded']
+        
+        
+        self.df = self.df.drop(['country_id', 'customer_id', 'tbl_loan_id', 'lender_id', 'disbursement_date', 'due_date',
+                   'Amount_Funded_By_Lender', 'Lender_portion_Funded', 'Lender_portion_to_be_repaid',
+                   'Total_Amount_to_Repay'], axis=1)
+        
+        
+        self.df['lender_repaid_ratio'] = self.df['lender_repaid_ratio'].fillna(self.df['lender_repaid_ratio'].mean())
+        self.df['lender_funded_ratio'] = self.df['lender_funded_ratio'].fillna(self.df['lender_funded_ratio'].mean())
+
+        numeric_cols = ['Total_Amount', 'duration', 'lender_repaid_ratio', 'lender_funded_ratio']
+        for col in numeric_cols:
+            self.df[f'{col}_transformed'] = np.log1p(self.df[col])
+            
+        self.df = self.df.drop(['Total_Amount', 'duration', 'lender_repaid_ratio', 'lender_funded_ratio'], axis=1)
+        
+        self.df['New_versus_Repeat'] = self.df['New_versus_Repeat'].apply(lambda x: 1 if x == 'Repeat Loan' else 0)
+        
+        
+        encoder = LabelEncoder()
+
+        self.df['loan_type'] = encoder.fit_transform(self.df['loan_type'])
+    
+        
+        return self.df
+
+
+
 
 class LogisticRegressionModel:
     def __init__(self, train_csv, max_iter=1000, random_state=42, test_size=0.3, target='target'):
@@ -19,7 +62,6 @@ class LogisticRegressionModel:
         self.target = target
         self.log_reg = LogisticRegression(max_iter=self.max_iter, random_state=self.random_state)
         
-        
     
     
     def read_csv(self):
@@ -27,6 +69,9 @@ class LogisticRegressionModel:
         
         
     def preprocess_data(self):
+        feature_engineer = FeatureEngineering(self.train)
+        self.train = feature_engineer.clean_data()
+        
         X = self.train.drop(self.target, axis=1)
         y = self.train[self.target]
         smote = SMOTE(random_state=42)
@@ -58,7 +103,7 @@ class LogisticRegressionModel:
         
     
 if __name__ == "__main__":
-    model = LogisticRegressionModel('clean_train.csv')
+    model = LogisticRegressionModel('train.csv')
     model.read_csv()
     model.preprocess_data()
     model.train_model()

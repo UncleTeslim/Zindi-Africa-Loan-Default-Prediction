@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib 
+from train import FeatureEngineering 
 
 
 class LogisticRegressionModelTester:
@@ -18,7 +19,9 @@ class LogisticRegressionModelTester:
 
     def preprocess_data(self):
         self.test_ids = self.test['ID']
-        self.test = self.test[self.columns]
+        feature_engineer = FeatureEngineering(self.test)
+        self.test = feature_engineer.clean_data()
+        # self.test = self.test[self.columns]
         
             
     def make_predictions(self):
@@ -29,15 +32,16 @@ class LogisticRegressionModelTester:
     def save_predictions(self):
         test_predictions, test_predictions_proba = self.make_predictions()
         self.test['target'] = test_predictions
+    
         my_result = pd.DataFrame({
             'ID': self.test_ids,
             'target': test_predictions 
             })
-        my_result.to_csv('baseline_submission.csv', index=False)
+        my_result.to_csv('baseline_submission_copy.csv', index=False)
 
 
 if __name__ == "__main__":
-    tester = LogisticRegressionModelTester('clean_test.csv')
+    tester = LogisticRegressionModelTester('test.csv')
     tester.load_model()
     tester.read_csv()
     tester.preprocess_data()
