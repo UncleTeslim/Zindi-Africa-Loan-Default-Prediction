@@ -37,7 +37,7 @@ class LogisticRegressionModelTester:
             'ID': self.test_ids,
             'target': test_predictions 
             })
-        my_result.to_csv('baseline_submission_copy.csv', index=False)
+        my_result.to_csv('baseline_submission.csv', index=False)
 
 
 if __name__ == "__main__":
