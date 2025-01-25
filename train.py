@@ -5,17 +5,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,  roc_auc_score
 from imblearn.over_sampling import SMOTE
+import joblib 
 
 
 #OOP
 
 class LogisticRegressionModel:
-    def __init__(self, train_csv, test_csv, max_iter=1000, random_state=42, test_size=0.3, target='target'):
+    def __init__(self, train_csv, max_iter=1000, random_state=42, test_size=0.3, target='target'):
         self.max_iter = max_iter
         self.random_state = random_state
         self.test_size = test_size
         self.train_csv = train_csv
-        self.test_csv = test_csv
         self.target = target
         self.log_reg = LogisticRegression(max_iter=self.max_iter, random_state=self.random_state)
         
@@ -24,7 +24,6 @@ class LogisticRegressionModel:
     
     def read_csv(self):
         self.train = pd.read_csv(self.train_csv)
-        self.test = pd.read_csv(self.test_csv)
         
         
     def preprocess_data(self):
@@ -36,8 +35,11 @@ class LogisticRegressionModel:
             X_resampled, y_resampled, test_size=self.test_size, 
          random_state=self.random_state, stratify=y_resampled)
         
+        joblib.dump(X.columns, 'columns.pkl')
+        
     def train_model(self):
         self.log_reg.fit(self.X_train, self.y_train)
+        
         
     def evaluate_model(self):
         y_pred = self.log_reg.predict(self.X_test)
@@ -50,25 +52,17 @@ class LogisticRegressionModel:
         print(confusion_matrix(self.y_test, y_pred))
         roc_auc = roc_auc_score(self.y_test, y_probs)
         print(f"\nROC AUC Score: {roc_auc:.4f}")
-        
-    def make_predictions(self):
-        test_features = self.test[self.X_train.columns]
-        test_predictions = self.log_reg.predict(test_features)
-        test_predictions_proba = self.log_reg.predict_proba(test_features)[:, 1]
-        return test_predictions, test_predictions_proba
     
-    def save_predictions(self):
-        test_predictions, test_predictions_proba = self.make_predictions()
-        self.test['target'] = test_predictions
-        my_result =  self.test[['ID', 'target']]
-        my_result.to_csv('baseline_submission.csv', index=False)
-
-
+    def save_model(self):
+        joblib.dump(self.log_reg, 'logistic_regression_model.pkl')
+        
+    
 if __name__ == "__main__":
-    model = LogisticRegressionModel('clean_train.csv', 'clean_test.csv')
+    model = LogisticRegressionModel('clean_train.csv')
     model.read_csv()
     model.preprocess_data()
     model.train_model()
     model.evaluate_model()
-    model.make_predictions()
-    model.save_predictions()
+    model.save_model()
+    print("Model trained and saved")
+    
