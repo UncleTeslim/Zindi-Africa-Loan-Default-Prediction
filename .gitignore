@@ -1,5 +1,5 @@
 #no_oop.py
-/_pycache__
+**_pycache__/
 /jupyter_files/baseline_submission.csv
 baseline_submission.csv
 columns.pkl
