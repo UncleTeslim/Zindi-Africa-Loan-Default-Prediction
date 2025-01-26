@@ -7,6 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,  roc_auc_score
 from imblearn.over_sampling import SMOTE
 import joblib 
+import argparse
 
 
 
@@ -102,12 +103,27 @@ class LogisticRegressionModel:
         joblib.dump(self.log_reg, 'logistic_regression_model.pkl')
         
     
-if __name__ == "__main__":
-    model = LogisticRegressionModel('train.csv')
-    model.read_csv()
-    model.preprocess_data()
-    model.train_model()
-    model.evaluate_model()
-    model.save_model()
-    print("Model trained and saved")
+# if __name__ == "__main__":
+#     model = LogisticRegressionModel('train.csv')
+#     model.read_csv()
+#     model.preprocess_data()
+#     model.train_model()
+#     model.evaluate_model()
+#     model.save_model()
+#     print("Model trained and saved")
     
+    
+if __name__ == "__main__":
+        parser = argparse.ArgumentParser(description='Train a loan default prediction model.')
+        parser.add_argument('train_csv', type=str, help='Path to the training CSV file. Please ensure it has same columns . Check VariableDefinitions.txt file for more information')
+        
+        
+        args = parser.parse_args()
+        
+        model = LogisticRegressionModel(args.train_csv)
+        model.read_csv()
+        model.preprocess_data()
+        model.train_model()
+        model.evaluate_model()
+        model.save_model()
+        print("Model trained and saved")

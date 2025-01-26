@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib 
+import argparse
 from train import FeatureEngineering 
 
 
@@ -40,10 +41,24 @@ class LogisticRegressionModelTester:
         my_result.to_csv('baseline_submission.csv', index=False)
 
 
+# if __name__ == "__main__":
+#     tester = LogisticRegressionModelTester('test.csv')
+#     tester.load_model()
+#     tester.read_csv()
+#     tester.preprocess_data()
+#     tester.save_predictions()
+#     print("Predictions made and saved")
+
 if __name__ == "__main__":
-    tester = LogisticRegressionModelTester('test.csv')
-    tester.load_model()
-    tester.read_csv()
-    tester.preprocess_data()
-    tester.save_predictions()
-    print("Predictions made and saved")
+        parser = argparse.ArgumentParser(description='Test a loan default prediction model.')
+        parser.add_argument('test_csv', type=str, help='Path to the test CSV file. Please ensure it has same columns . Check VariableDefinitions.txt file for more information')
+        
+    
+        args = parser.parse_args()
+        
+        tester = LogisticRegressionModelTester(args.test_csv)
+        tester.load_model()
+        tester.read_csv()
+        tester.preprocess_data()
+        tester.save_predictions()
+        print("Model trained and saved")
