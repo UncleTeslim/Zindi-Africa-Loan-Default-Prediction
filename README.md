@@ -37,12 +37,12 @@ This project predicts whether a customer will default on a loan using a logistic
 Before running the scripts, ensure you have the following installed:
 
 - Python 3.7 or higher
-- Required Python libraries: `pandas`, `numpy`, `scikit-learn`, `imblearn`, `joblib`
+- Required Python libraries: `pandas`, `numpy`, `scikit-learn`, `imblearn`, `joblib`, `argparse`
 
 You can install the required libraries using the following command:
 
 ```bash
-pip install pandas numpy scikit-learn imbalanced-learn joblib
+pip install pandas numpy scikit-learn imbalanced-learn joblib argparse
 ```
 
 ## Cloning the repository
@@ -50,7 +50,7 @@ pip install pandas numpy scikit-learn imbalanced-learn joblib
 To get started, clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/loan-default-prediction.git
+git clone https://github.com/UncleTeslim/Zindi-Africa-Loan-Default-Prediction.git
 cd loan-default-prediction
 ```
 
@@ -79,7 +79,7 @@ This will:
    
 
 
-#### 2.Training the Model
+### 2.Training the Model
 The test.py script tests the trained model on a dataset with targets and evaluates its performance using metrics like accuracy, classification report, and ROC AUC score.
 
 Usage:
@@ -95,7 +95,6 @@ This will:
 2. Preprocess the test data.
 
 3. Evaluate the model and print performance metrics.
-   
 
 
 ### 3. Making predictions
