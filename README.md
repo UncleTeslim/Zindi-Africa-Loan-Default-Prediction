@@ -80,7 +80,7 @@ This will:
 
 2. Train the logistic regression model.
 
-3. Save the trained model to logistic_regression_model.pkl.
+3. Save the trained model to model.pkl.
 
 4. Save the column names to columns.pkl for inference.
    
@@ -97,7 +97,7 @@ train.csv: Path to the test dataset in CSV format.
 
 This will:
 
-1. Load the trained model from logistic_regression_model.pkl.
+1. Load the trained model from model.pkl.
 
 2. Preprocess the test data.
 
@@ -105,7 +105,7 @@ This will:
 
 
 ### 3. Making predictions
-The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
+The inference.py script takes user input via the CLI to predict whether a customer will default on a loan..
 
 Usage:
 ```bash
@@ -134,7 +134,7 @@ The script will output the prediction (0 for no default, 1 for default).
 
 
 ## File Descriptions:
-train.py: Trains the logistic regression model and saves it to logistic_regression_model.pkl.
+train.py: Trains the logistic regression model and saves it to model.pkl.
 
 test.py: Tests the trained model on a dataset with targets.
 
