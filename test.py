@@ -1,7 +1,7 @@
 import pandas as pd
 import joblib 
 import argparse
-from train import FeatureEngineering 
+from log_reg import FeatureEngineering 
 
 
 class ModelTester:
