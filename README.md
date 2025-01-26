@@ -24,7 +24,7 @@ Loan default prediction is a critical application of machine learning in the fin
 
 This project predicts whether a customer will default on a loan using a logistic regression model. It consists of three main scripts:
 
-1. train.py: Trains the logistic regression model and saves it to a file.
+1. log_reg.py: Trains the logistic regression model and saves it to a file.
 
 2. random_forest.py: Trains the random forest model and saves to a file.
 
