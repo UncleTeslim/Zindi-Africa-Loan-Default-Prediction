@@ -93,7 +93,7 @@ Usage:
 ```bash
 python test.py test.csv
 ```
-train.csv: Path to the test dataset in CSV format.
+test.csv: Path to the test dataset in CSV format.
 
 This will:
 
@@ -165,7 +165,8 @@ The dataset for this project contains the following:
    - Created meaningful features (e.g., repayment ratio).
    - One-hot encoding for categorical variables.
 3. **Machine Learning Algorithms:**  
-   - Logistic Regression  
+   - Logistic Regression
+   - Random Forest Classifier 
 4. **Model Evaluation:**  
    - Area Under Curve (AUC).  
    - Confusion Matrix.  
@@ -185,7 +186,7 @@ The dataset for this project contains the following:
 | AUC-ROC          | 98.8%      |
 
 Confusion Matrix:
-[[18915  1304]
+[[18915  1304]\
  [  541 19678]]
 
 
@@ -200,7 +201,7 @@ Confusion Matrix:
 | AUC-ROC          | 99.9%      |
 
 Confusion Matrix:
-[[20072   147]
+[[20072   147]\
  [   73 20146]]
 
 
