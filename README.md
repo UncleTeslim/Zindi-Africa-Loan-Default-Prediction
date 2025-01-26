@@ -57,7 +57,8 @@ cd loan-default-prediction
 ## Running the scripts
 Running the Scripts:
 
-***1. Training the Model***
+### 1.Training the Model
+
 The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
 
 Usage:
@@ -78,7 +79,7 @@ This will:
    
 
 
-2. ***Training the Model***
+#### 2.Training the Model
 The test.py script tests the trained model on a dataset with targets and evaluates its performance using metrics like accuracy, classification report, and ROC AUC score.
 
 Usage:
@@ -97,7 +98,7 @@ This will:
    
 
 
-3. ***Making predictions***
+### 3. Making predictions
 The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
 
 Usage:
