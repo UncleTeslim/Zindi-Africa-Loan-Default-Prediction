@@ -22,7 +22,7 @@ Predicting the likelihood of loan defaults using machine learning. This project 
 
 Loan default prediction is a critical application of machine learning in the financial sector. This project leverages historical loan data to build predictive models that estimate the likelihood of a borrower defaulting on a loan. By using this solution, financial institutions can reduce risks and improve decision-making in loan approvals.
 
-This project predicts whether a customer will default on a loan using a logistic regression model. It consists of three main scripts:
+This project predicts whether a customer will default on a loan using both logistic regression and random forest models. It consists of four main scripts:
 
 1. log_reg.py: Trains the logistic regression model and saves it to a file.
 
