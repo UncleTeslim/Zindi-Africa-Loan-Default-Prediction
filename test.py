@@ -4,8 +4,8 @@ import argparse
 from train import FeatureEngineering 
 
 
-class LogisticRegressionModelTester:
-    def __init__(self, test_csv, model='logistic_regression_model.pkl', columns_file ='columns.pkl'):
+class ModelTester:
+    def __init__(self, test_csv, model='model.pkl', columns_file ='columns.pkl'):
         self.test_csv = test_csv
         self.model = model
         self.columns_file = columns_file
@@ -56,9 +56,9 @@ if __name__ == "__main__":
     
         args = parser.parse_args()
         
-        tester = LogisticRegressionModelTester(args.test_csv)
+        tester = ModelTester(args.test_csv)
         tester.load_model()
         tester.read_csv()
         tester.preprocess_data()
         tester.save_predictions()
-        print("Model trained and saved")
+        print("Model tested and prediction saved")

@@ -4,4 +4,5 @@ __pycache__/
 baseline_submission.csv
 columns.pkl
 logistic_regression_model.pkl
+model.pkl
 

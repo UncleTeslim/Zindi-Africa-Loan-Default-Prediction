@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,  roc_auc_score
 from imblearn.over_sampling import SMOTE
 import joblib 
@@ -12,7 +12,6 @@ import argparse
 
 
 #OOP
-
 
 class FeatureEngineering:
     def __init__(self, df):
@@ -54,14 +53,19 @@ class FeatureEngineering:
 
 
 
-class LogisticRegressionModel:
-    def __init__(self, train_csv, max_iter=1000, random_state=42, test_size=0.3, target='target'):
-        self.max_iter = max_iter
+class RandomForest:
+    def __init__(self, train_csv, n_estimators=100, random_state=42, max_depth=None, test_size=0.3, target='target'):
+        self.n_estimators = n_estimators
         self.random_state = random_state
+        self.max_depth = max_depth
         self.test_size = test_size
         self.train_csv = train_csv
         self.target = target
-        self.log_reg = LogisticRegression(max_iter=self.max_iter, random_state=self.random_state)
+        self.rf = RandomForestClassifier(
+            n_estimators=self.n_estimators, 
+            random_state=self.random_state, 
+            max_depth=self.max_depth
+            )
         
     
     
@@ -84,13 +88,17 @@ class LogisticRegressionModel:
         joblib.dump(X.columns, 'columns.pkl')
         
     def train_model(self):
-        self.log_reg.fit(self.X_train, self.y_train)
+        self.rf.fit(self.X_train, self.y_train)
         
         
     def evaluate_model(self):
-        y_pred = self.log_reg.predict(self.X_test)
-        y_probs = self.log_reg.predict_proba(self.X_test)[:, 1] 
+        y_pred = self.rf.predict(self.X_test)
+        y_probs = self.rf.predict_proba(self.X_test)[:, 1] 
         accuracy = accuracy_score(self.y_test, y_pred)
+        importance = self.rf.feature_importances_
+        # for i, col in enumerate(self.X_train.columns):
+        #     print(f"{col}: {importance[i]:.4f}")
+
         print("Accuracy:", accuracy)
         print("\nClassification Report:")
         print(classification_report(self.y_test, y_pred))
@@ -100,7 +108,7 @@ class LogisticRegressionModel:
         print(f"\nROC AUC Score: {roc_auc:.4f}")
     
     def save_model(self):
-        joblib.dump(self.log_reg, 'model.pkl')
+        joblib.dump(self.rf, 'model.pkl')
         
     
 # if __name__ == "__main__":
@@ -120,7 +128,7 @@ if __name__ == "__main__":
         
         args = parser.parse_args()
         
-        model = LogisticRegressionModel(args.train_csv)
+        model = RandomForest(args.train_csv)
         model.read_csv()
         model.preprocess_data()
         model.train_model()

@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 from train import FeatureEngineering
 
-def load_model_and_columns(model='logistic_regression_model.pkl', columns_file='columns.pkl'):
+def load_model_and_columns(model='model.pkl', columns_file='columns.pkl'):
     model = joblib.load(model)
     columns = joblib.load(columns_file)
     return model, columns
@@ -52,7 +52,7 @@ def main():
     else:
         print("Prediction: The loan will not default.")
     
-    print(f"Confidence: {prediction_proba[0]:.4f}")
+    #print(f"Confidence: {prediction_proba[0]:.4f}")
 
 if __name__ == "__main__":
     main()
