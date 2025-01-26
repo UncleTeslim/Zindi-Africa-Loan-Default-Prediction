@@ -185,7 +185,7 @@ The dataset for this project contains the following:
 | F1 Score         |95-96%    |
 | AUC-ROC          | 98.8%      |
 
-Confusion Matrix:
+Confusion Matrix:\
 [[18915  1304]\
  [  541 19678]]
 
@@ -200,7 +200,7 @@ Confusion Matrix:
 | F1 Score         |99% |
 | AUC-ROC          | 99.9%      |
 
-Confusion Matrix:
+Confusion Matrix:\
 [[20072   147]\
  [   73 20146]]
 
