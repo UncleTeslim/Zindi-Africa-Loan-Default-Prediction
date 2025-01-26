@@ -26,9 +26,11 @@ This project predicts whether a customer will default on a loan using a logistic
 
 1. train.py: Trains the logistic regression model and saves it to a file.
 
-2. test.py: Tests the trained model on a dataset with targets to evaluate its performance.
+2. random_forest.py: Trains the random forest model and saves to a file.
 
-3. inference.py: Takes user input via the command-line interface (CLI) to predict whether a customer will default on a loan.
+3. test.py: Tests the trained model on a dataset with targets to evaluate its performance.
+
+4. inference.py: Takes user input via the command-line interface (CLI) to predict whether a customer will default on a loan.
 
 ---
 
@@ -59,12 +61,17 @@ Running the Scripts:
 
 ### 1.Training the Model
 
-The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
+The log_reg.py and random_forest.py scripts train the logistic regression and random forest model respectively using a training dataset and saves the trained model to a file (model.pkl).
 
 Usage:
 ```bash
 python train.py train.csv
 ```
+**OR**
+```bash
+python random_forest.py train.csv
+```
+
 train.csv: Path to the training dataset in CSV format.
 
 This will:
@@ -167,7 +174,7 @@ The dataset for this project contains the following:
 ---
 
 
-## 📊 Results
+## 📊 Results for Logistic Regression
 
 | Metric          | Value      |
 |------------------|------------|
@@ -176,6 +183,26 @@ The dataset for this project contains the following:
 | Recall           | 94% and 97% |
 | F1 Score         |95-96%    |
 | AUC-ROC          | 98.8%      |
+
+Confusion Matrix:
+[[18915  1304]
+ [  541 19678]]
+
+
+## 📊 Results for Random Forest
+
+| Metric          | Value      |
+|------------------|------------|
+| Accuracy         | 99.45%  |
+| Precision        | 100% & 99%  |
+| Recall           | 99% and 100% |
+| F1 Score         |99% |
+| AUC-ROC          | 99.9%      |
+
+Confusion Matrix:
+[[20072   147]
+ [   73 20146]]
+
 
 Visualizations and detailed analysis can be found in the [new_zindi.ipynb] notebook.
 
