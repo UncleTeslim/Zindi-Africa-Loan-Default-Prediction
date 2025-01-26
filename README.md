@@ -9,9 +9,6 @@ Predicting the likelihood of loan defaults using machine learning. This project 
 2. [Prerequisites](#prerequisites)
 3. [Cloning the Repository](#cloning_the_repository)
 4. [Running the Scripts](#running_the_scripts):
-      [Training the Model](#training_the_model)
-      [Testing the Model](#testing_the_model)
-      [making predictions](#making_predictions)
 5. [Files Description](#files_description)
 6. [Dataset](#dataset)
 7. [Modeling Approach](#modeling-approach)
@@ -58,7 +55,8 @@ cd loan-default-prediction
 ```
 
 ## Running the scripts
-Running the Scripts
+Running the Scripts:
+
 ***1. Training the Model***
 The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
 
@@ -79,6 +77,7 @@ This will:
 4. Save the column names to columns.pkl for inference.
    
 
+
 2. ***Training the Model***
 The test.py script tests the trained model on a dataset with targets and evaluates its performance using metrics like accuracy, classification report, and ROC AUC score.
 
@@ -96,6 +95,7 @@ This will:
 
 3. Evaluate the model and print performance metrics.
    
+
 
 3. ***Making predictions***
 The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
