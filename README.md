@@ -65,7 +65,7 @@ The log_reg.py and random_forest.py scripts train the logistic regression and ra
 
 Usage:
 ```bash
-python train.py train.csv
+python log_reg.py train.csv
 ```
 **OR**
 ```bash
