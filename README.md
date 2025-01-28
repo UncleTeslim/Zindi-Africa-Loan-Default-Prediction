@@ -22,9 +22,9 @@ Predicting the likelihood of loan defaults using machine learning. This project 
 
 Loan default prediction is a critical application of machine learning in the financial sector. This project leverages historical loan data to build predictive models that estimate the likelihood of a borrower defaulting on a loan. By using this solution, financial institutions can reduce risks and improve decision-making in loan approvals.
 
-This project predicts whether a customer will default on a loan using a logistic regression model. It consists of three main scripts:
+This project predicts whether a customer will default on a loan using both logistic regression and random forest models. It consists of four main scripts:
 
-1. train.py: Trains the logistic regression model and saves it to a file.
+1. log_reg.py: Trains the logistic regression model and saves it to a file.
 
 2. random_forest.py: Trains the random forest model and saves to a file.
 
@@ -65,7 +65,7 @@ The log_reg.py and random_forest.py scripts train the logistic regression and ra
 
 Usage:
 ```bash
-python train.py train.csv
+python log_reg.py train.csv
 ```
 **OR**
 ```bash
@@ -80,7 +80,7 @@ This will:
 
 2. Train the logistic regression model.
 
-3. Save the trained model to logistic_regression_model.pkl.
+3. Save the trained model to model.pkl.
 
 4. Save the column names to columns.pkl for inference.
    
@@ -93,11 +93,11 @@ Usage:
 ```bash
 python test.py test.csv
 ```
-train.csv: Path to the test dataset in CSV format.
+test.csv: Path to the test dataset in CSV format.
 
 This will:
 
-1. Load the trained model from logistic_regression_model.pkl.
+1. Load the trained model from model.pkl.
 
 2. Preprocess the test data.
 
@@ -105,7 +105,7 @@ This will:
 
 
 ### 3. Making predictions
-The train.py script trains the logistic regression model using a training dataset and saves the trained model to a file (logistic_regression_model.pkl).
+The inference.py script takes user input via the CLI to predict whether a customer will default on a loan..
 
 Usage:
 ```bash
@@ -134,7 +134,7 @@ The script will output the prediction (0 for no default, 1 for default).
 
 
 ## File Descriptions:
-train.py: Trains the logistic regression model and saves it to logistic_regression_model.pkl.
+train.py: Trains the logistic regression model and saves it to model.pkl.
 
 test.py: Tests the trained model on a dataset with targets.
 
@@ -165,7 +165,8 @@ The dataset for this project contains the following:
    - Created meaningful features (e.g., repayment ratio).
    - One-hot encoding for categorical variables.
 3. **Machine Learning Algorithms:**  
-   - Logistic Regression  
+   - Logistic Regression
+   - Random Forest Classifier 
 4. **Model Evaluation:**  
    - Area Under Curve (AUC).  
    - Confusion Matrix.  
@@ -184,8 +185,8 @@ The dataset for this project contains the following:
 | F1 Score         |95-96%    |
 | AUC-ROC          | 98.8%      |
 
-Confusion Matrix:
-[[18915  1304]
+Confusion Matrix:\
+[[18915  1304]\
  [  541 19678]]
 
 
@@ -199,8 +200,8 @@ Confusion Matrix:
 | F1 Score         |99% |
 | AUC-ROC          | 99.9%      |
 
-Confusion Matrix:
-[[20072   147]
+Confusion Matrix:\
+[[20072   147]\
  [   73 20146]]
 
 
