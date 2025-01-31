@@ -1,7 +1,7 @@
 import pandas as pd
 import joblib 
 import argparse
-from log_reg import FeatureEngineering 
+from log_reg import FeatureEngineering
 
 
 class ModelTester:
@@ -11,7 +11,7 @@ class ModelTester:
         self.columns_file = columns_file
         
     def load_model(self):
-        self.log_reg = joblib.load(self.model)
+        self.train_model = joblib.load(self.model)
         self.columns = joblib.load(self.columns_file)
 
 
@@ -26,9 +26,11 @@ class ModelTester:
         
             
     def make_predictions(self):
-        test_predictions = self.log_reg.predict(self.test)
-        test_predictions_proba = self.log_reg.predict_proba(self.test)[:, 1]
+        test_predictions = self.train_model.predict(self.test)
+        test_predictions_proba = self.train_model.predict_proba(self.test)[:, 1]
         return test_predictions, test_predictions_proba
+        
+        
         
     def save_predictions(self):
         test_predictions, test_predictions_proba = self.make_predictions()
