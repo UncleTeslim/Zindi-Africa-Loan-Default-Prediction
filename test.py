@@ -1,7 +1,8 @@
 import pandas as pd
+import numpy as np
 import joblib 
 import argparse
-from log_reg import FeatureEngineering
+from random_forest import FeatureEngineering
 
 
 class ModelTester:
@@ -22,12 +23,13 @@ class ModelTester:
         self.test_ids = self.test['ID']
         feature_engineer = FeatureEngineering(self.test)
         self.test = feature_engineer.clean_data()
-        # self.test = self.test[self.columns]
+        self.test = self.test[self.columns]
+        self.test_data = np.array(self.test)
         
             
     def make_predictions(self):
-        test_predictions = self.train_model.predict(self.test)
-        test_predictions_proba = self.train_model.predict_proba(self.test)[:, 1]
+        test_predictions = self.train_model.predict(self.test_data)
+        test_predictions_proba = self.train_model.predict_proba(self.test_data)[:, 1]
         return test_predictions, test_predictions_proba
         
         

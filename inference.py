@@ -1,6 +1,6 @@
 import pandas as pd
 import joblib
-from log_reg import FeatureEngineering
+from random_forest import FeatureEngineering
 
 def load_model_and_columns(model='model.pkl', columns_file='columns.pkl'):
     model = joblib.load(model)
