@@ -2,7 +2,6 @@
 
 Predicting the likelihood of loan defaults using machine learning. This project is part of the Zindi Africa Challenge and aims to build robust predictive models to assist lenders in making informed decisions.
 
-https://uncleteslim-loan-default.onrender.com/
 
 ---
 
