@@ -24,13 +24,11 @@ Loan default prediction is a critical application of machine learning in the fin
 
 This project predicts whether a customer will default on a loan using both logistic regression and random forest models. It consists of four main scripts:
 
-1. log_reg.py: Trains the logistic regression model and saves it to a file.
+1. random_forest.py: Trains the random forest model and saves to a file.
 
-2. random_forest.py: Trains the random forest model and saves to a file.
+2. test.py: Tests the trained model on a dataset with targets to evaluate its performance.
 
-3. test.py: Tests the trained model on a dataset with targets to evaluate its performance.
-
-4. inference.py: Takes user input via the command-line interface (CLI) to predict whether a customer will default on a loan.
+3. inference.py: Takes user input via the command-line interface (CLI) to predict whether a customer will default on a loan.
 
 ---
 
@@ -65,10 +63,6 @@ The log_reg.py and random_forest.py scripts train the logistic regression and ra
 
 Usage:
 ```bash
-python log_reg.py train.csv
-```
-**OR**
-```bash
 python random_forest.py train.csv
 ```
 
@@ -78,7 +72,7 @@ This will:
 
 1. Preprocess the data.
 
-2. Train the logistic regression model.
+2. Train the random forest model.
 
 3. Save the trained model to model.pkl.
 
@@ -134,7 +128,7 @@ The script will output the prediction (0 for no default, 1 for default).
 
 
 ## File Descriptions:
-train.py: Trains the logistic regression model and saves it to model.pkl.
+random_forest.py: Trains the logistic regression model and saves it to model.pkl.
 
 test.py: Tests the trained model on a dataset with targets.
 
@@ -175,19 +169,6 @@ The dataset for this project contains the following:
 ---
 
 
-## 📊 Results for Logistic Regression
-
-| Metric          | Value      |
-|------------------|------------|
-| Accuracy         | 95.44%  |
-| Precision        | 97% & 94%  |
-| Recall           | 94% and 97% |
-| F1 Score         |95-96%    |
-| AUC-ROC          | 98.8%      |
-
-Confusion Matrix:\
-[[18915  1304]\
- [  541 19678]]
 
 
 ## 📊 Results for Random Forest
@@ -195,14 +176,14 @@ Confusion Matrix:\
 | Metric          | Value      |
 |------------------|------------|
 | Accuracy         | 99.45%  |
-| Precision        | 100% & 99%  |
-| Recall           | 99% and 100% |
-| F1 Score         |99% |
+| Precision        | 100% for non-defaults(0) & 73% for defaults(1)  |
+| Recall           | 99% non-defaults(0) and 93% for defaults(1) |
+| F1 Score         |1.00 for non-defaults and 0.82 for defaults |
 | AUC-ROC          | 99.9%      |
 
 Confusion Matrix:\
-[[20072   147]\
- [   73 20146]]
+[[20092   127]\
+ [   27 350]]
 
 
 Visualizations and detailed analysis can be found in the [new_zindi.ipynb] notebook.
