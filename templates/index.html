@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loan Default Prediction</title>
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --background-color: #f4f6f7;
+        --text-color: #333;
+        --hint-color: #7f8c8d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+
+      .prediction-form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+      }
+
+      .form-hint {
+        color: var(--hint-color);
+        font-size: 0.85em;
+        margin-top: 5px;
+      }
+
+      .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        background-color: #2980b9;
+      }
+
+      .prediction-result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e7f3fe;
+        border-left: 6px solid var(--secondary-color);
+        border-radius: 4px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+
+        .prediction-form {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Loan Default Prediction Model</h1>
+      </div>
+
+      <form class="prediction-form" action="/" method="post">
+        <div class="form-group">
+          <label for="ID">Entry ID:</label>
+          <input
+            type="number"
+            id="ID"
+            name="ID"
+            required
+            placeholder="Enter a unique number for this entry"
+          />
+          <div class="form-hint">
+            A unique identifier for this specific loan entry (e.g., sequential
+            number)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="customer_id">Customer ID:</label>
+          <input
+            type="number"
+            id="customer_id"
+            name="customer_id"
+            step="0.01"
+            required
+            placeholder="Enter customer's unique identifier"
+          />
+          <div class="form-hint">
+            A unique number identifying the specific customer applying for the
+            loan
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="country_id">Country ID:</label>
+          <input
+            type="text"
+            id="country_id"
+            name="country_id"
+            required
+            placeholder="Enter country code"
+          />
+          <div class="form-hint">
+            Two-letter country code (e.g., US, UK, CA) where the customer
+            resides
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tbl_loan_id">Loan ID:</label>
+          <input
+            type="number"
+            id="tbl_loan_id"
+            name="tbl_loan_id"
+            step="0.01"
+            required
+            placeholder="Enter unique loan identifier"
+          />
+          <div class="form-hint">
+            A unique number identifying this specific loan application
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Total_Amount">Total Loan Amount:</label>
+          <input
+            type="number"
+            id="Total_Amount"
+            name="Total_Amount"
+            step="0.01"
+            required
+            placeholder="Enter total loan amount"
+          />
+          <div class="form-hint">
+            The full amount of money being borrowed (in local currency)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Total_Amount_to_Repay">Total Amount to Repay:</label>
+          <input
+            type="number"
+            id="Total_Amount_to_Repay"
+            name="Total_Amount_to_Repay"
+            step="0.01"
+            required
+            placeholder="Enter total repayment amount"
+          />
+          <div class="form-hint">
+            Total amount to be paid back, including principal, interest, and
+            fees
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="loan_type">Loan Type:</label>
+          <select id="loan_type" name="loan_type" required>
+            <option value="">Select Loan Type</option>
+            <option value="Type_1">Type 1</option>
+            <option value="Type_2">Type 2</option>
+            <option value="Type_3">Type 3</option>
+            <option value="Type_4">Type 4</option>
+            <option value="Type_5">Type 5</option>
+            <option value="Type_6">Type 6</option>
+            <option value="Type_7">Type 7</option>
+            <option value="Type_8">Type 8</option>
+            <option value="Type_9">Type 9</option>
+            <option value="Type_10">Type 10</option>
+            <option value="Type_11">Type 11</option>
+            <option value="Type_12">Type 12</option>
+            <option value="Type_13">Type 13</option>
+            <option value="Type_14">Type 14</option>
+            <option value="Type_15">Type 15</option>
+            <option value="Type_16">Type 16</option>
+            <option value="Type_17">Type 17</option>
+            <option value="Type_18">Type 18</option>
+            <option value="Type_19">Type 19</option>
+            <option value="Type_20">Type 20</option>
+            <option value="Type_21">Type 21</option>
+            <option value="Type_22">Type 22</option>
+            <option value="Type_23">Type 23</option>
+            <option value="Type_24">Type 24</option>
+
+            <!-- Add more loan types as needed -->
+          </select>
+          <div class="form-hint">
+            Classification of the loan (e.g., personal, business, mortgage)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="disbursement_date">Disbursement Date:</label>
+          <input
+            type="number"
+            id="disbursement_date"
+            name="disbursement_date"
+            required
+            placeholder="Enter loan disbursement date"
+          />
+          <div class="form-hint">
+            Date when loan funds were or will be transferred (format: YYYYMMDD)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="duration">Loan Duration (days):</label>
+          <input
+            type="number"
+            id="duration"
+            name="duration"
+            step="0.01"
+            required
+            placeholder="Enter loan term length"
+          />
+          <div class="form-hint">
+            Total number of days from loan disbursement to final repayment
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="lender_id">Lender ID:</label>
+          <input
+            type="number"
+            id="lender_id"
+            name="lender_id"
+            step="0.01"
+            required
+            placeholder="Enter lender's unique identifier"
+          />
+          <div class="form-hint">
+            Unique number identifying the financial institution providing the
+            loan
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="New_versus_Repeat">Loan Category:</label>
+          <select id="New_versus_Repeat" name="New_versus_Repeat" required>
+            <option value="">Select Loan Category</option>
+            <option value="New">New</option>
+            <option value="Repeat">Repeat</option>
+          </select>
+          <div class="form-hint">
+            Indicates if this is the customer's first loan or a subsequent loan
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Amount_Funded_By_Lender">Amount Funded by Lender:</label>
+          <input
+            type="number"
+            id="Amount_Funded_By_Lender"
+            name="Amount_Funded_By_Lender"
+            step="0.01"
+            required
+            placeholder="Enter amount funded by lender"
+          />
+          <div class="form-hint">
+            Specific dollar amount contributed by the lending institution
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Lender_portion_Funded">Lender Portion Funded (%):</label>
+          <input
+            type="number"
+            id="Lender_portion_Funded"
+            name="Lender_portion_Funded"
+            step="0.01"
+            required
+            placeholder="Enter percentage of loan funded"
+          />
+          <div class="form-hint">
+            Percentage of total loan amount provided by the lender(ratio: for
+            example 0.8 for 80%)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="due_date">Due Date:</label>
+          <input
+            type="number"
+            id="due_date"
+            name="due_date"
+            required
+            placeholder="Enter loan repayment due date"
+          />
+          <div class="form-hint">
+            Date when the full loan amount is expected to be repaid (format:
+            YYYYMMDD)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Lender_portion_to_be_repaid"
+            >Lender Portion to be Repaid:</label
+          >
+          <input
+            type="number"
+            id="Lender_portion_to_be_repaid"
+            name="Lender_portion_to_be_repaid"
+            step="0.01"
+            required
+            placeholder="Enter lender's repayment portion"
+          />
+          <div class="form-hint">
+            Amount of loan to be repaid directly to the lending institution
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Predict Loan Default</button>
+      </form>
+
+      {% if result %}
+      <div class="result">
+        <p><strong>Prediction:</strong> {{ result }}</p>
+      </div>
+      {% endif %} {% if error %}
+      <div class="result" style="color: red">
+        <p><strong>Error:</strong> {{ error }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

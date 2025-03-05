@@ -43,6 +43,10 @@ class ModelTester:
             'target': test_predictions 
             })
         my_result.to_csv('baseline_submission.csv', index=False)
+        
+        # class_counts = pd.Series(test_predictions).value_counts().sort_index()
+        # print("Number of each class predicted:")
+        # print(class_counts)
 
 
 # if __name__ == "__main__":
